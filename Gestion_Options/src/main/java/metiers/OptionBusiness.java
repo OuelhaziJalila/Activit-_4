@@ -1,14 +1,10 @@
 package metiers;
 
 import entities.Option;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Path("/options")
 public class OptionBusiness {
     private static List<Option> options;
 
@@ -22,9 +18,7 @@ public class OptionBusiness {
         options.add(new Option(5, "Chimie", "Chimie", "M. Responsable Chimie", 20, 2, 20));
     }
 
-    @GET
-    @Path("/{code}")
-    public Option getOptionByCode(@PathParam("code") int code) {
+    public Option getOptionByCode(int code) {
         for (Option option : options) {
             if (option.getCodeOption() == code)
                 return option;
@@ -32,18 +26,11 @@ public class OptionBusiness {
         return null;
     }
 
-
-    @POST
     public boolean addOption(Option option) {
         return options.add(option);
     }
 
-
-
-
-
-    @GET
-    public List<Option> getOptionsByDomaine( @QueryParam("domaine") String domaine) {
+    public List<Option> getOptionsByDomaine(String domaine) {
         List<Option> liste = new ArrayList<Option>();
         for (Option option : options) {
             if (option.getDomaine().equalsIgnoreCase(domaine))
@@ -61,9 +48,7 @@ public class OptionBusiness {
         return liste;
     }
 
-    @DELETE
-    @Path("/{code}")
-    public boolean deleteOption(@PathParam("code") int code ) {
+    public boolean deleteOption(int code) {
         Iterator<Option> iterator = options.iterator();
         while (iterator.hasNext()) {
             Option option = iterator.next();
@@ -75,9 +60,7 @@ public class OptionBusiness {
         return false;
     }
 
-    @PUT
-    @Path("/{code}")
-    public boolean updateOption(@PathParam("code") int code, Option updatedOption) {
+    public boolean updateOption(int code, Option updatedOption) {
         int index = -1;
         for (int i = 0; i < options.size(); i++) {
             if (options.get(i).getCodeOption() == code) {
